@@ -1,11 +1,11 @@
 #pragma once
 
-#include "Core/Core.h"
+#include "Core.h"
+#include "Window/Window.h"
+
 #include <unordered_map>
 
 #include <GLFW/glfw3.h>
-
-#include "Core/Window/Window.h"
 
 class WindowsWindow : public Window<GLFWwindow>
 {
@@ -14,6 +14,8 @@ public:
 	~WindowsWindow();
 
 	void Update() override;
+
+	void Exit() override;
 	bool IsExit() override;
 
 protected:
@@ -23,4 +25,5 @@ protected:
 private:
 	int InitGLFW();
 	int InitGLAD();
+	int InitImGUI();
 };

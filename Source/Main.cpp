@@ -1,26 +1,15 @@
-#include "Core/Core.h"
-#include <iostream>
-
-#include <GLFW/glfw3.h>
-
-#include "Core/Window/WindowsWindow.h"
+#include "Core.h"
 
 int main()
 {
-	WindowData windowData;
-	windowData.width = 1280;
-	windowData.height = 720;
-	windowData.title = "DuoJRenderer";
-	WindowsWindow* windowsWindow = new WindowsWindow(windowData);
-	windowsWindow->InitWindow();
-	GLFWwindow* window = windowsWindow->GetWindow();
+	InitWindow();
 
-	while (!windowsWindow->IsExit())
+	while (!IsExit())
 	{
-		windowsWindow->Update();
+		UpdateWindow();
 	}
 
-	delete windowsWindow;
+	DestroyWindow();
 
 	return 0;
 }
