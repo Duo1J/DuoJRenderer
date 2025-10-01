@@ -1,60 +1,44 @@
 #pragma once
 
-#include "Core.h"
 #include "Window/Window.h"
 #include "Window/WindowsWindow.h"
+#include "Camera/Camera.h"
+#include "Scene/Scene.h"
 
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>
+#include <stb_image.h>
 
-static IWindow* gWindow = nullptr;
-static WindowsWindow* gWindowsWindow = nullptr;
+class Context;
+class IWindow;
+class WindowsWindow;
+class Camera;
+class Scene;
 
-void InitWindow()
+class Context
 {
-	WindowData windowData;
-	windowData.width = 1280;
-	windowData.height = 720;
-	windowData.title = "DuoJRenderer";
+public:
+	static IWindow* gWindow;
+	static WindowsWindow* gWindowsWindow;
+	static Camera* gMainCamera;
+	static Scene* gScene;
 
-	gWindow = new WindowsWindow(windowData);
-	gWindow->InitWindow();
+public:
+	static void InitWindow();
 
-	gWindowsWindow = static_cast<WindowsWindow*>(gWindow);
-}
+	static void InitContext();
 
-void Exit()
-{
-	if (gWindow == nullptr)
-	{
-		return;
-	}
+	static void InitScene();
 
-	gWindow->Exit();
-}
+	static void RenderScene();
 
-bool IsExit()
-{
-	if (gWindow == nullptr)
-	{
-		return true;
-	}
+	static void Exit();
 
-	return gWindow->IsExit();
-}
+	static bool IsExit();
 
-void UpdateWindow()
-{
-	if (gWindow == nullptr)
-	{
-		return;
-	}
+	static void UpdateWindow();
 
-	gWindow->Update();
-}
+	static void DestroyWindow();
 
-void DestroyWindow()
-{
-	delete gWindow;
-	gWindow = nullptr;
-}
+	static float GetDeltaTime();
+};

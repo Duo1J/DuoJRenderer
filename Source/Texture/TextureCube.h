@@ -1,11 +1,12 @@
 #pragma once
 
-#include <iostream>
-#include <vector>
-
 #include "Core.h"
+
 #include <GLFW/glfw3.h>
 #include "stb_image.h"
+
+#include <iostream>
+#include <vector>
 
 class TextureCube
 {

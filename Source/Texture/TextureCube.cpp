@@ -28,7 +28,7 @@ void TextureCube::LoadCubemap()
 		}
 		else
 		{
-			LogError("Failed to load cubemap: ", path);
+			LogError("Failed to load cubemap: " << path);
 		}
 	}
 

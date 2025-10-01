@@ -1,10 +1,11 @@
 #pragma once
 
-#include <string>
+#include "Core.h"
 
-#include <Core.h>
 #include <GLFW/glfw3.h>
 #include "stb_image.h"
+
+#include <string>
 
 enum class TextureType
 {

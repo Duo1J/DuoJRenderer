@@ -1,7 +1,4 @@
 #include "Camera.h"
-#include "Input/Input.h"
-#include <GLFW/glfw3.h>
-#include <gtc/matrix_transform.hpp>
 
 Camera::Camera()
 {
@@ -22,8 +19,10 @@ glm::mat4 Camera::GetViewMatrix()
 	return glm::lookAt(transform.position, transform.position + transform.front, transform.up);
 }
 
-void Camera::ProcessKeyboardInput(float deltaTime)
+void Camera::ProcessKeyboardInput()
 {
+	float deltaTime = Context::GetDeltaTime();
+
 	if (Input::GetKey(GLFW_KEY_W) == GLFW_PRESS)
 	{
 		transform.position += transform.front * moveSpeed * deltaTime;
@@ -50,7 +49,7 @@ void Camera::ProcessKeyboardInput(float deltaTime)
 	}
 }
 
-void Camera::ProcessMouseInput(double x, double y, float deltaTime)
+void Camera::ProcessMouseInput(double x, double y)
 {
 	if (Input::GetKey(GLFW_KEY_LEFT_ALT) == GLFW_PRESS)
 	{
@@ -74,15 +73,15 @@ void Camera::ProcessMouseInput(double x, double y, float deltaTime)
 	xOffset *= rotateSensity;
 	yOffset *= rotateSensity;
 
-	transform.rotate.yaw += xOffset * deltaTime;
-	transform.rotate.pitch += yOffset * deltaTime;
+	transform.rotate.yaw += xOffset;
+	transform.rotate.pitch += yOffset;
 
 	UpdateCameraVector();
 }
 
-void Camera::ProcessMouseWheelInput(double x, double y, float deltaTime)
+void Camera::ProcessMouseWheelInput(double x, double y)
 {
-	fov += -y * deltaTime;
+	fov += -y;
 	fov = glm::clamp(fov, 1.0f, 90.0f);
 }
 

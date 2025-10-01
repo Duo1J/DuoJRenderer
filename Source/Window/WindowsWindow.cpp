@@ -1,25 +1,36 @@
 #include "WindowsWindow.h"
-#include <imgui.h>
-#include <backends/imgui_impl_glfw.h>
-#include <backends/imgui_impl_opengl3.h>
-#include "Loop/Loop.h"
+#include <unordered_map>
 
 #define NEW_FRAME ImGui_ImplOpenGL3_NewFrame(); \
 				  ImGui_ImplGlfw_NewFrame(); \
 				  ImGui::NewFrame();
 
-std::unordered_map<GLFWwindow*, WindowsWindow*> gWindowsWindowMap;
+static std::unordered_map<GLFWwindow*, WindowsWindow*> gWindowsWindowMap;
 
 WindowsWindow::~WindowsWindow()
 {
 	Exit();
 }
 
-void ProcessInput(GLFWwindow* window)
+void OnKeyboardInput(GLFWwindow* window)
 {
 	if (glfwGetKey(window, GLFW_KEY_ESCAPE))
 	{
 		glfwSetWindowShouldClose(window, true);
+	}
+
+	if (glfwGetKey(window, GLFW_KEY_LEFT_ALT))
+	{
+		glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_NORMAL);
+	}
+	else
+	{
+		glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
+	}
+
+	if (Context::gMainCamera != nullptr)
+	{
+		Context::gMainCamera->ProcessKeyboardInput();
 	}
 }
 
@@ -30,7 +41,7 @@ void UpdateImGUI()
 
 void WindowsWindow::Update()
 {
-	ProcessInput(window);
+	OnKeyboardInput(window);
 
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT | GL_STENCIL_BUFFER_BIT);
 
@@ -80,6 +91,12 @@ void WindowsWindow::OnWindowInit()
 
 void WindowsWindow::OnResolutionChange(unsigned int width, unsigned int height)
 {
+	glViewport(0, 0, width, height);
+
+	if (Context::gMainCamera != nullptr)
+	{
+		Context::gMainCamera->UpdateCameraVector();
+	}
 }
 
 void OnSetFramebufferSize(GLFWwindow* window, int width, int height)
@@ -87,8 +104,24 @@ void OnSetFramebufferSize(GLFWwindow* window, int width, int height)
 	auto it = gWindowsWindowMap.find(window);
 	if (it != gWindowsWindowMap.end())
 	{
-		WindowsWindow* windowsWindow = it->second;
-		windowsWindow->SetResolution(width, height);
+		WindowsWindow* window = it->second;
+		window->SetResolution(width, height);
+	}
+}
+
+void OnMouseInput(GLFWwindow* window, double x, double y)
+{
+	if (Context::gMainCamera != nullptr)
+	{
+		Context::gMainCamera->ProcessMouseInput(x, y);
+	}
+}
+
+void OnMouseWheelInput(GLFWwindow* window, double x, double y)
+{
+	if (Context::gMainCamera != nullptr)
+	{
+		Context::gMainCamera->ProcessMouseWheelInput(x, y);
 	}
 }
 
@@ -117,6 +150,8 @@ int WindowsWindow::InitGLFW()
 	glfwMakeContextCurrent(window);
 
 	glfwSetFramebufferSizeCallback(window, OnSetFramebufferSize);
+	glfwSetCursorPosCallback(window, OnMouseInput);
+	glfwSetScrollCallback(window, OnMouseWheelInput);
 
 	return 0;
 }

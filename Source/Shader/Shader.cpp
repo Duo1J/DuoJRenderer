@@ -32,7 +32,7 @@ Shader& Shader::Attach(const char* shaderPath, ShaderType shaderType)
 	}
 	catch (std::ifstream::failure e)
 	{
-		LogError("Failed to load shader file: ", shaderPath);
+		LogError("Failed to load shader file: " << shaderPath);
 		return *this;
 	}
 
@@ -51,7 +51,7 @@ Shader& Shader::Attach(const char* shaderPath, ShaderType shaderType)
 		if (!success)
 		{
 			glGetShaderInfoLog(shaderID, 512, NULL, info);
-			LogError("Shader compile failed! ProgramID: ", std::to_string(programID), ", ShaderID: ", shaderID, ", ShaderType: ", shaderType, "\nInfo: ", info);
+			LogError("Shader compile failed! ProgramID: " << std::to_string(programID) << ", ShaderID: " << shaderID << ", ShaderType: " << (int)shaderType << "\nInfo: " << info);
 		};
 
 		glAttachShader(programID, shaderID);
@@ -71,56 +71,56 @@ void Shader::Link()
 	if (!success)
 	{
 		glGetProgramInfoLog(programID, 512, NULL, info);
-		LogError("Shader program link failed! ProgramID: ", std::to_string(programID), "\nInfo: ", info);
+		LogError("Shader program link failed! ProgramID: " << std::to_string(programID) << "\nInfo: " << info);
 	}
 }
 
-inline void Shader::Use()
+void Shader::Use()
 {
 	glUseProgram(programID);
 }
 
-inline void Shader::Delete()
+void Shader::Delete()
 {
 	glDeleteProgram(programID);
 }
 
-inline void Shader::SetBool(const std::string& name, bool value) const
+void Shader::SetBool(const std::string& name, bool value) const
 {
 	glUniform1i(glGetUniformLocation(programID, name.c_str()), (int)value);
 }
 
-inline void Shader::SetInt(const std::string& name, int value) const
+void Shader::SetInt(const std::string& name, int value) const
 {
 	glUniform1i(glGetUniformLocation(programID, name.c_str()), value);
 }
 
-inline void Shader::SetFloat(const std::string& name, float value) const
+void Shader::SetFloat(const std::string& name, float value) const
 {
 	glUniform1f(glGetUniformLocation(programID, name.c_str()), value);
 }
 
-inline void Shader::SetMat4(const std::string& name, glm::mat4 value) const
+void Shader::SetMat4(const std::string& name, glm::mat4 value) const
 {
 	glUniformMatrix4fv(glGetUniformLocation(programID, name.c_str()), 1, GL_FALSE, glm::value_ptr(value));
 }
 
-inline void Shader::SetMat3(const std::string& name, glm::mat3 value) const
+void Shader::SetMat3(const std::string& name, glm::mat3 value) const
 {
 	glUniformMatrix4fv(glGetUniformLocation(programID, name.c_str()), 1, GL_FALSE, glm::value_ptr(value));
 }
 
-inline void Shader::SetVec4(const std::string& name, glm::vec4 value) const
+void Shader::SetVec4(const std::string& name, glm::vec4 value) const
 {
 	glUniform4f(glGetUniformLocation(programID, name.c_str()), value.x, value.y, value.z, value.w);
 }
 
-inline void Shader::SetVec3(const std::string& name, glm::vec3 value) const
+void Shader::SetVec3(const std::string& name, glm::vec3 value) const
 {
 	glUniform3f(glGetUniformLocation(programID, name.c_str()), value.x, value.y, value.z);
 }
 
-inline void Shader::SetVec2(const std::string& name, glm::vec2 value) const
+void Shader::SetVec2(const std::string& name, glm::vec2 value) const
 {
 	glUniform2f(glGetUniformLocation(programID, name.c_str()), value.x, value.y);
 }
@@ -136,7 +136,7 @@ unsigned int Shader::ShaderTypeToGLType(ShaderType shaderType)
 	case ShaderType::GEOMETRY:
 		return GL_GEOMETRY_SHADER;
 	default:
-		LogError("Undefined shader type: ", shaderType);
+		LogError("Undefined shader type: " << (int)shaderType);
 		return 0;
 	}
 }

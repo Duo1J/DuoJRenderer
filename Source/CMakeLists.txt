@@ -35,11 +35,17 @@ target_include_directories(${TARGET} PRIVATE
     ${IMGUI_ROOT_DIR}
     # stb_image
     ${CMAKE_SOURCE_DIR}/ThirdParty/stb_image
+    # assimp
+    ${CMAKE_SOURCE_DIR}/ThirdParty/assimp-3.1.1/include
 )
+
+find_library(ASSIMP_LIB assimp ${CMAKE_SOURCE_DIR}/ThirdParty/assimp-3.1.1/library)
+message(STATUS "ASSIMP_LIB = ${ASSIMP_LIB}")
 
 target_link_libraries(${TARGET} PRIVATE
     glad
     glfw
+    ${ASSIMP_LIB}
 )
 
 if(WIN32)

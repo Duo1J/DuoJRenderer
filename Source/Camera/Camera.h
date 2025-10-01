@@ -1,8 +1,13 @@
 #pragma once
 
-#include <glm.hpp>
-
+#include "Core.h"
+#include "Context.h"
 #include "Geometry/Transform.h"
+#include "Input/Input.h"
+
+#include <glm.hpp>
+#include <GLFW/glfw3.h>
+#include <gtc/matrix_transform.hpp>
 
 class Camera
 {
@@ -26,11 +31,11 @@ public:
 
 	glm::mat4 GetViewMatrix();
 
-	void ProcessKeyboardInput(float deltaTime);
+	void ProcessKeyboardInput();
 
-	void ProcessMouseInput(double x, double y, float deltaTime);
+	void ProcessMouseInput(double x, double y);
 
-	void ProcessMouseWheelInput(double x, double y, float deltaTime);
+	void ProcessMouseWheelInput(double x, double y);
 
 	void UpdateCameraVector();
 };

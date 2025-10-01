@@ -53,17 +53,13 @@ Texture::Texture(const char* _texturePath, TextureType _textureType, unsigned in
 	}
 	else
 	{
-		LogError("Failed to load texture: ", texturePath);
+		LogError("Failed to load texture: " << texturePath);
 	}
 }
 
 std::string Texture::GetTextureTypeName()
 {
-	if (textureType == TextureType::DIFFUSE)
-	{
-		return "tex_diffuse";
-	}
-	else if (textureType == TextureType::COMMON)
+	if (textureType == TextureType::DIFFUSE || textureType == TextureType::COMMON)
 	{
 		return "tex_diffuse";
 	}
@@ -77,7 +73,7 @@ std::string Texture::GetTextureTypeName()
 	}
 	else
 	{
-		LogError("Undefined texture type: ", textureType);
+		LogError("Undefined texture type: " << (int)textureType);
 		assert(false);
 		return "";
 	}

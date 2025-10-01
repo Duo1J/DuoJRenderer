@@ -1,15 +1,23 @@
 #include "Core.h"
+#include "Context.h"
+#include "Render/Renderer.h"
 
 int main()
 {
-	InitWindow();
+	Context::InitWindow();
+	Context::InitContext();
+	Context::InitScene();
 
-	while (!IsExit())
+	Renderer::InitRenderer();
+
+	Loop::Init();
+
+	while (!Context::IsExit())
 	{
-		UpdateWindow();
+		Context::UpdateWindow();
 	}
 
-	DestroyWindow();
+	Context::DestroyWindow();
 
 	return 0;
 }

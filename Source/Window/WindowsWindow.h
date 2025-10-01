@@ -1,11 +1,14 @@
 #pragma once
 
 #include "Core.h"
+#include "Context.h"
 #include "Window/Window.h"
+#include "Loop/Loop.h"
 
-#include <unordered_map>
-
+#include <imgui.h>
 #include <GLFW/glfw3.h>
+#include <backends/imgui_impl_glfw.h>
+#include <backends/imgui_impl_opengl3.h>
 
 class WindowsWindow : public Window<GLFWwindow>
 {

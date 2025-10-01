@@ -2,20 +2,20 @@
 
 #include <iostream>
 
-#define Log(...) \
+#define Log(msg) \
 	do { \
-		std::cout << "[INFO] " << __VA_ARGS__; \
+		std::cout << "[INFO] " << msg; \
 		std::cout << std::endl; \
 	} while (0)
 
-#define LogWarn(...) \
+#define LogWarn(msg) \
 	do { \
-		std::cout << "[WARN] " << __VA_ARGS__; \
+		std::cout << "[WARN] " << msg; \
 		std::cout << std::endl; \
 	} while (0)
 
-#define LogError(...) \
+#define LogError(msg) \
 	do { \
-		std::cout << "[ERROR] " << __VA_ARGS__; \
+		std::cout << "[ERROR] " << msg; \
 		std::cout << std::endl; \
 	} while (0)
