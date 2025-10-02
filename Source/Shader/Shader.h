@@ -50,5 +50,7 @@ public:
 	void SetVec2(const std::string& name, glm::vec2 value) const;
 
 private:
+	bool linked = false;
+
 	static unsigned int ShaderTypeToGLType(ShaderType shaderType);
 };

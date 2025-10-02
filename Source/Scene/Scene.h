@@ -4,8 +4,10 @@
 #include "Context.h"
 #include "Geometry/Model.h"
 #include "Resource/Resource.h"
+#include "SceneObject.h"
 
 class Model;
+class SceneObject;
 
 class Scene
 {
@@ -15,6 +17,5 @@ public:
 	void InitScene();
 	void RenderScene();
 
-	std::shared_ptr<Model> model;
-	Shader shader;
+	std::vector<SceneObject*> sceneObjects;
 };

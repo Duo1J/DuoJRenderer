@@ -1,6 +1,8 @@
 #include "WindowsWindow.h"
 #include <unordered_map>
 
+#include "Render/PostProcessPass.h"
+
 #define NEW_FRAME ImGui_ImplOpenGL3_NewFrame(); \
 				  ImGui_ImplGlfw_NewFrame(); \
 				  ImGui::NewFrame();
@@ -36,14 +38,26 @@ void OnKeyboardInput(GLFWwindow* window)
 
 void UpdateImGUI()
 {
+	ImGui::Begin("Hierarchy");
 
+	for (auto it : Context::gScene->sceneObjects)
+	{
+		ImGui::Text(it->name.c_str());
+	}
+
+	ImGui::End();
+
+	ImGui::Begin("Option");
+
+	ImGui::SliderFloat("exposure", &PostProcessPass::exposure, 0.1f, 2.0f);
+	ImGui::SliderFloat("gamma", &PostProcessPass::gamma, 1.4f, 3.2f);
+
+	ImGui::End();
 }
 
 void WindowsWindow::Update()
 {
 	OnKeyboardInput(window);
-
-	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT | GL_STENCIL_BUFFER_BIT);
 
 	NEW_FRAME;
 
@@ -97,6 +111,8 @@ void WindowsWindow::OnResolutionChange(unsigned int width, unsigned int height)
 	{
 		Context::gMainCamera->UpdateCameraVector();
 	}
+
+	PostProcessPass::OnResolutionChange(width, height);
 }
 
 void OnSetFramebufferSize(GLFWwindow* window, int width, int height)

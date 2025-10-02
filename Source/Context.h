@@ -4,6 +4,7 @@
 #include "Window/WindowsWindow.h"
 #include "Camera/Camera.h"
 #include "Scene/Scene.h"
+#include "Render/Render.h"
 
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>

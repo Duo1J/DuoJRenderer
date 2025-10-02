@@ -14,4 +14,6 @@ struct Transform
 	glm::vec3 right = glm::vec3(0, 0, 0);
 
 	EulerAngle rotate;
+
+	glm::vec3 scale = glm::vec3(1, 1, 1);
 };

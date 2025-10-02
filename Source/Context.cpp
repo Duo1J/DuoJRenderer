@@ -28,20 +28,11 @@ void Context::InitContext()
 	cameraTransform.up = glm::vec3(0, 1, 0);
 	cameraTransform.rotate.yaw = -90;
 	gMainCamera = new Camera(cameraTransform);
-}
 
-void Context::InitScene()
-{
 	gScene = new Scene();
 	gScene->InitScene();
-}
 
-void Context::RenderScene()
-{
-	if (gScene != nullptr)
-	{
-		gScene->RenderScene();
-	}
+	Loop::Init();
 }
 
 void Context::Exit()

@@ -63,6 +63,13 @@ Shader& Shader::Attach(const char* shaderPath, ShaderType shaderType)
 
 void Shader::Link()
 {
+	if (linked)
+	{
+		LogError("Shader is already linked: " << programID);
+		return;
+	}
+	linked = true;
+
 	int success;
 	char info[512];
 

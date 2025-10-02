@@ -7,7 +7,6 @@ struct Material {
     sampler2D tex_specular1;
     sampler2D tex_specular2;
     // ...
-    // 增加法线贴图
     sampler2D tex_normal1;
     sampler2D tex_normal2;
     // ...
@@ -51,8 +50,8 @@ uniform vec3 viewPos;
 uniform Material material;
 
 uniform DirLight dirLight;
-#define POINT_LIGHT_NUM 4
-uniform PointLight pointLight[POINT_LIGHT_NUM];
+uniform int pointLightNum;
+uniform PointLight pointLight[4];
 
 vec3 CalcDirectionalLight(DirLight light, vec3 normal, vec3 viewDir)
 {
@@ -91,7 +90,7 @@ void main()
     vec3 viewDir = normalize(fs_in.TangentViewPos - fs_in.TangentFragPos);
 
     vec3 result = CalcDirectionalLight(dirLight, normal, viewDir);
-    for (int i = 0; i < POINT_LIGHT_NUM; i++)
+    for (int i = 0; i < pointLightNum; i++)
     {
         result += CalcPointLight(pointLight[i], normal, viewDir, fs_in.TangentFragPos);
     }
